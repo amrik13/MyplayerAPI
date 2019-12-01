@@ -5,6 +5,9 @@ class ReadData{
     private $CAROUSEL_TABLE = "carousel";
     private $USER_TABLE = "myplayer_registration";
     private $TOPIMAGE_TABLE='topimage';
+    private $CONTENTTYPE_TABLE='type';
+    private $ARTIST_TABLE='artist';
+    private $LANGUAGE_TABLE='language';
     
     function __construct($conn) {
         $this->conn = $conn;
@@ -64,7 +67,24 @@ class ReadData{
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
-    
+    //Read Content Type
+    public function readContetType(){
+        $sql = "SELECT * FROM ".$this->CONTENTTYPE_TABLE;
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    //Read Artist
+    public function readArtist(){
+        $sql = "SELECT * FROM ".$this->ARTIST_TABLE;
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    //Read Language
+    public function readLanguage(){
+        $sql = "SELECT * FROM ".$this->LANGUAGE_TABLE;
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
     
 }
 

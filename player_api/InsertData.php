@@ -6,6 +6,9 @@ class InsertData{
     private $CAROUSEL_TABLE = "carousel";
     private $USER_TABLE = "myplayer_registration";
     private $TOPIMAGE_TABLE='topimage';
+    private $CONTENTTYPE_TABLE='type';
+    private $ARTIST_TABLE='artist';
+    private $LANGUAGE_TABLE='language';
     
     public function __construct($conn) {
         $this->conn = $conn;
@@ -156,7 +159,54 @@ class InsertData{
            
         }
     }
-    
+    //insert content type ( Ex. Song & Video)
+    public function insertContentType($type){
+        $sql = "INSERT INTO ".$this->CONTENTTYPE_TABLE." (contenttype) VALUES ('$type')";
+        mysqli_query($this->conn, $sql);
+        if(mysqli_affected_rows($this->conn)>0){
+            ?><script>
+                alert("Content Type Inserted Successfully!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }else{
+             ?><script>
+                alert("Error While Inserting Content Type!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }
+    }
+    // Insert Artist
+    public function insertArtist($artist){
+        $sql = "INSERT INTO ".$this->ARTIST_TABLE." (artistname) VALUES ('$artist')";
+        mysqli_query($this->conn, $sql);
+        if(mysqli_affected_rows($this->conn)>0){
+            ?><script>
+                alert("Artist Inserted Successfully!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }else{
+             ?><script>
+                alert("Error While Inserting Artist!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }
+    }
+    // Insert Language
+    public function insertLanguage($language){
+        $sql = "INSERT INTO ".$this->LANGUAGE_TABLE." (languages) VALUES ('$language')";
+        mysqli_query($this->conn, $sql);
+        if(mysqli_affected_rows($this->conn)>0){
+            ?><script>
+                alert("Language Inserted Successfully!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }else{
+             ?><script>
+                alert("Error While Inserting Language!!");
+                window.location.href = "../category.php";
+            </script><?php
+        }
+    }
     
     
     

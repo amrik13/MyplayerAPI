@@ -2,15 +2,15 @@
 
 class Config {
 
-	 private $host = "localhost";
-	 private $db_name = "amriksinghpadam_myplayer_db";
-	 private $username = "amriksinghpadam_myplayer_db";
-	 private $password = "Amrik25081995";
+//	 private $host = "localhost";
+//	 private $db_name = "amriksinghpadam_myplayer_db";
+//	 private $username = "amriksinghpadam_myplayer_db";
+//	 private $password = "Amrik25081995";
         //Actual Detail
-//       private $host = "localhost";
-//	private $db_name = "myplayer_db";
-//	private $username = "root";
-//	private $password = "";
+        private $host = "localhost";
+	private $db_name = "myplayer_db";
+	private $username = "root";
+	private $password = "";
         
 	private $conn;
 

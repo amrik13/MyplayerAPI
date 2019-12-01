@@ -124,7 +124,7 @@ if(isset($_REQUEST['edit_carousel_form'])){
 }
 
 // Upload Top 4 Images
-if($_REQUEST['upload_top_image']){
+if(isset($_REQUEST['upload_top_image'])){
      
     $topImage_name = $_FILES["topImage"]["name"];
     $img_tmp_name = $_FILES["topImage"]["tmp_name"];
@@ -156,13 +156,57 @@ if($_REQUEST['upload_top_image']){
         </script><?php
     }
 }
-
+// delete top 4 image 
 if(isset($_REQUEST['dltTopImg'])){
     $imgId = $_REQUEST['topImgid'];
     $dltData = new DeleteData($conn);
     $dltData->deleteTopImage($imgId);
 }
 
-
+//add content type (song , video )
+if(isset($_REQUEST['content_type_submit'])){
+    $type = $_REQUEST['contentType'];
+    $temp = 0;
+    if(preg_match('/[\'^£$%&*()}{@#0123456789~?><>,|=_+¬-]/', $type)){
+        $temp++;
+    }
+    if($temp==0){
+        $type = trim(strtolower($type));
+        $insertContentType = new InsertData($conn);
+        $insertContentType->insertContentType($type);
+    }else{
+        echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
+    }
+}
+//add Artist 
+if(isset($_REQUEST['artist'])){
+    $artist = $_REQUEST['artistName'];
+    $temp = 0;
+    if(preg_match('/[\'^£$%&*()}{@#0123456789~?><>,|=_+¬-]/', $artist)){
+        $temp++;
+    }
+    if($temp==0){
+        $artist = trim(strtolower($artist));
+        $insertArtist = new InsertData($conn);
+        $insertArtist->insertArtist($artist);
+    }else{
+        echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
+    }
+}
+//add Language
+if(isset($_REQUEST['language_form'])){
+    $language = $_REQUEST['language'];
+    $temp = 0;
+    if(preg_match('/[\'^£$%&*()}{@#0123456789~?><>,|=_+¬-]/', $language)){
+        $temp++;
+    }
+    if($temp==0){
+        $language = trim(strtolower($language));
+        $insertLang = new InsertData($conn);
+        $insertLang->insertLanguage($language);
+    }else{
+        echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
+    }
+}
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-include 'sidebar.php';
+
 include 'player_db/Config.php';
 include 'player_api/ReadData.php';
 $db = new Config();
@@ -67,7 +67,9 @@ $result = $readCarousel->readCarousel();
                 </ul>
                  
             </header>
-
+<?php
+include 'sidebar.php';
+?>
              <section class="content">
                 <header class="content__title">
                     <h1>Carousel</h1>

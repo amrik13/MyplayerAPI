@@ -1,5 +1,5 @@
 <?php
-include 'sidebar.php';
+
 include 'player_db/Config.php';
 include 'player_api/ReadData.php';
 $db = new Config();
@@ -65,7 +65,9 @@ $result = $readTopImg->readTopImage();
                 </ul>
                  
             </header>
-
+<?php
+include 'sidebar.php';
+?>
 
              <section class="content">
                 <header class="content__title">
@@ -119,7 +121,7 @@ $result = $readTopImg->readTopImage();
                         <div class="col-md-12">
                             <div class="card" style="width:100%;">
                                 <div class="card-body"  style="width:100%;">
-                                  <h5>Carousel list</h5>
+                                  <h5>Top Image Block list</h5>
                                     <div class="table-responsive">
                                         <table id="data-table" class="table table-bordered" style="width:100%;" >
                                             <thead class="thead-default">
@@ -155,10 +157,7 @@ $result = $readTopImg->readTopImage();
                                                             </center>
                                                         </td>
                                                     </tr>
-                                                <?php 
-                                                    $count++;
-                                                }
-                                            ?>
+                                                <?php  $count++;  }   ?>
 
                                         </table>
                                     </div>
