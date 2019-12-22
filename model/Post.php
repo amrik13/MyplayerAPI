@@ -4,7 +4,7 @@ include '../player_db/Config.php';
 include '../player_api/InsertData.php';
 include '../player_api/ReadData.php';
 include '../player_api/DeleteData.php';
-
+include '../player_api/APIConstant.php';
 
 $db = new Config();
 $conn = $db->connect_db();
@@ -15,7 +15,7 @@ if(isset($_REQUEST["update_carousel"])){
     $carousel_title = $_REQUEST["carouseltitle"];
     $banner_name = $_FILES["carouselbanner"]["name"];
     $img_tmp_name = $_FILES["carouselbanner"]["tmp_name"];
-    $carousel_img_dir = "../img/carouselbanner/";
+    $carousel_img_dir = APIConstant::$CAROUSELDIR;
     $banner_size = $_FILES["carouselbanner"]["size"];
     $file_mime = $_FILES["carouselbanner"]["type"];
     
@@ -93,7 +93,7 @@ if(isset($_REQUEST['edit_carousel_form'])){
     
     $banner_name = $_FILES["new_carousel_banner"]["name"];
     $img_tmp_name = $_FILES["new_carousel_banner"]["tmp_name"];
-    $carousel_img_dir = "../img/carouselbanner/";
+    $carousel_img_dir = APIConstant::$CAROUSELDIR;
     $banner_size = $_FILES["new_carousel_banner"]["size"];
     $file_mime = $_FILES["new_carousel_banner"]["type"];
     
@@ -125,10 +125,10 @@ if(isset($_REQUEST['edit_carousel_form'])){
 
 // Upload Top 4 Images
 if(isset($_REQUEST['upload_top_image'])){
-     
+    
     $topImage_name = $_FILES["topImage"]["name"];
     $img_tmp_name = $_FILES["topImage"]["tmp_name"];
-    $topImage_dir = "../img/topImageBlock/";
+    $topImage_dir = APIConstant::$TOPIMAGEDIR;
     $topImage_size = $_FILES["topImage"]["size"];
     $file_mime = $_FILES["topImage"]["type"];
     
@@ -171,9 +171,38 @@ if(isset($_REQUEST['content_type_submit'])){
         $temp++;
     }
     if($temp==0){
-        $type = trim(strtolower($type));
-        $insertContentType = new InsertData($conn);
-        $insertContentType->insertContentType($type);
+        $contentTypeImage_name = $_FILES["content_type_banner"]["name"];
+        $img_tmp_name = $_FILES["content_type_banner"]["tmp_name"];
+        $contentTypeImage_dir = APIConstant::$CONTENTTYPEIMAGEDIR;
+        $contentTypeImage_size = $_FILES["content_type_banner"]["size"];
+        $file_mime = $_FILES["content_type_banner"]["type"];
+
+        if($file_mime=="image/jpeg" || $file_mime=="image/jpg" || $file_mime=="image/png"){
+            if(file_exists($contentTypeImage_dir.$contentTypeImage_name)){
+            ?><script>
+                  alert("Hello! Image Already Exist With This Name!");
+                  window.location.href = "../category.php";
+            </script><?php
+            }else{
+                if($contentTypeImage_size > 320000){
+                ?><script>
+                      alert("Image Size Exceeded, Please choose image below 320kb");
+                      window.location.href = "../category.php";
+                </script><?php
+                }else{
+                    $type = trim(strtolower($type));
+                    $insertContentType = new InsertData($conn);
+                    $insertContentType->insertContentType($type,$contentTypeImage_name,
+                            $img_tmp_name,$contentTypeImage_dir);
+                }
+            }
+        }else{
+            ?><script>
+                  alert("Sorry! Only JPEG/PNG/JPG Accepted!!");
+                  window.location.href = "../category.php";
+            </script><?php
+        }
+        
     }else{
         echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
     }
@@ -186,9 +215,37 @@ if(isset($_REQUEST['artist'])){
         $temp++;
     }
     if($temp==0){
-        $artist = trim(strtolower($artist));
-        $insertArtist = new InsertData($conn);
-        $insertArtist->insertArtist($artist);
+        $artistImage_name = $_FILES["artist_banner"]["name"];
+        $img_tmp_name = $_FILES["artist_banner"]["tmp_name"];
+        $artistImage_dir = APIConstant::$ARTISTIMAGEDIR;
+        $artistImage_size = $_FILES["artist_banner"]["size"];
+        $file_mime = $_FILES["artist_banner"]["type"];
+
+        if($file_mime=="image/jpeg" || $file_mime=="image/jpg" || $file_mime=="image/png"){
+            if(file_exists($artistImage_dir.$artistImage_name)){
+            ?><script>
+                  alert("Hello! Image Already Exist With This Name!");
+                  window.location.href = "../category.php";
+            </script><?php
+            }else{
+                if($artistImage_size > 320000){
+                ?><script>
+                      alert("Image Size Exceeded, Please choose image below 320kb");
+                      window.location.href = "../category.php";
+                </script><?php
+                }else{
+                     $artist = trim(strtolower($artist));
+                    $insertArtist = new InsertData($conn);
+                    $insertArtist->insertArtist($artist,$artistImage_name,
+                            $img_tmp_name,$artistImage_dir);
+                }
+            }
+        }else{
+            ?><script>
+                  alert("Sorry! Only JPEG/PNG/JPG Accepted!!");
+                  window.location.href = "../category.php";
+            </script><?php
+        }
     }else{
         echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
     }
@@ -201,12 +258,162 @@ if(isset($_REQUEST['language_form'])){
         $temp++;
     }
     if($temp==0){
-        $language = trim(strtolower($language));
-        $insertLang = new InsertData($conn);
+        $languageImage_name = $_FILES["language_banner"]["name"];
+        $img_tmp_name = $_FILES["language_banner"]["tmp_name"];
+        $languageImage_dir = APIConstant::$LANGUAGEBANNERDIR;
+        $languageImage_size = $_FILES["language_banner"]["size"];
+        $file_mime = $_FILES["language_banner"]["type"];
+
+        if($file_mime=="image/jpeg" || $file_mime=="image/jpg" || $file_mime=="image/png"){
+            if(file_exists($languageImage_dir.$languageImage_name)){
+            ?><script>
+                  alert("Hello! Image Already Exist With This Name!");
+                  window.location.href = "../category.php";
+            </script><?php
+            }else{
+                if($languageImage_size > 320000){
+                ?><script>
+                      alert("Image Size Exceeded, Please choose image below 320kb");
+                      window.location.href = "../category.php";
+                </script><?php
+                }else{
+                     $language = trim(strtolower($language));
+                    $insertLang = new InsertData($conn);
+                    $insertLang->insertLanguage($language,$languageImage_name,
+                            $img_tmp_name,$languageImage_dir);
+                }
+            }
+        }else{
+            ?><script>
+                  alert("Sorry! Only JPEG/PNG/JPG Accepted!!");
+                  window.location.href = "../category.php";
+            </script><?php
+        }
+        
+        
         $insertLang->insertLanguage($language);
     }else{
         echo "<center><h2>Special Character & Number Not Allowed!</h2></center>";
     }
+}
+
+// Upload Song Data
+if(isset($_REQUEST['upload_song_data'])){
+    
+    $artistId =  $_REQUEST['song_artist'];
+    $languageId =  $_REQUEST['song_language'];
+    $typeId =  $_REQUEST['song_type'];
+    $songTitle = $_REQUEST['song_title'];
+    $songDesc = $_REQUEST['song_description'];
+    // Song .mp3 file
+    $songName = $_FILES['song_file']['name'];
+    $songFileType = $_FILES['song_file']['type'];
+    $song_tmp_name = $_FILES['song_file']['tmp_name'];
+    $songDirectroy = APIConstant::$SONGDIRECTORY;
+    // Song Image file
+    $songBannerName = $_FILES['song_banner']['name'];
+    $songBannerFileType = $_FILES['song_banner']['type'];
+    $songBanner_tmp_name = $_FILES['song_banner']['tmp_name'];
+    $songBannerDirectroy = APIConstant::$SONGIMAGEDIR;
+    //echo $songFileType;
+    
+    if($songFileType=="audio/mp3"){
+            if(file_exists($songDirectroy.$songName)){
+            ?><script>
+                  alert("Hello! Song File Already Exist With This Name!");
+                  window.location.href = "../song.php";
+            </script><?php
+            }else{
+                if($songBannerFileType=="image/jpg" || $songBannerFileType=="image/jpeg" || $songBannerFileType=="image/png" ){
+                    if(file_exists($songBannerDirectroy.$songBannerName)){
+                    ?><script>
+                          alert("Hello! Song Image Already Exist With This Name!");
+                          window.location.href = "../song.php";
+                    </script><?php
+                    }else{
+                        try{
+                            $insertLang = new InsertData($conn);
+                            $insertLang->insertSongDetail($artistId,$languageId,$typeId,$songTitle,$songDesc,$songName,
+                                $songBannerName,$song_tmp_name,$songBanner_tmp_name,$songDirectroy,$songBannerDirectroy);
+                        } catch (Exception $ex) {
+                            print_r($ex);
+                        }
+                        
+                    }
+                }else{
+                    ?><script>
+                          alert("Sorry! Only .jpg/.png/.jpeg Accepted!!");
+                          window.location.href = "../song.php";
+                    </script><?php
+                }
+            }
+        }else{
+            ?><script>
+                  alert("Sorry! Only .MP3 Accepted!!");
+                  window.location.href = "../song.php";
+            </script><?php
+        }
+    
+}
+
+
+// Upload Video Data
+if(isset($_REQUEST['upload_video_data'])){
+    
+    $artistId =  $_REQUEST['video_artist'];
+    $languageId =  $_REQUEST['video_language'];
+    $typeId =  $_REQUEST['video_type'];
+    $videoTitle = $_REQUEST['video_title'];
+    $videoDesc = $_REQUEST['video_description'];
+    // Song .mp3 file
+    $videoName = $_FILES['video_file']['name'];
+    $videoFileType = $_FILES['video_file']['type'];
+    $video_tmp_name = $_FILES['video_file']['tmp_name'];
+    $videoDirectroy = APIConstant::$VIDEODIRECTORY;
+    // Song Image file
+    $videoBannerName = $_FILES['video_banner']['name'];
+    $videoBannerFileType = $_FILES['video_banner']['type'];
+    $videoBanner_tmp_name = $_FILES['video_banner']['tmp_name'];
+    $videoBannerDirectroy = APIConstant::$VIDEOIMAGEDIR;
+    //echo $songFileType;
+    
+    if($videoFileType=="video/mp4"){
+        if(file_exists($videoDirectroy.$videoName)){
+        ?><script>
+              alert("Hello! Video File Already Exist With This Name!");
+              window.location.href = "../video.php";
+        </script><?php
+        }else{
+            if($videoBannerFileType=="image/jpg" || $videoBannerFileType=="image/jpeg" || $videoBannerFileType=="image/png" ){
+                if(file_exists($videoBannerDirectroy.$videoBannerName)){
+                ?><script>
+                      alert("Hello! Video Image Already Exist With This Name!");
+                      window.location.href = "../video.php";
+                </script><?php
+                }else{
+                    try{
+                        $insertLang = new InsertData($conn);
+                        $insertLang->insertVideoDetail($artistId,$languageId,$typeId,$videoTitle,$videoDesc,$videoName,
+                            $videoBannerName,$video_tmp_name,$videoBanner_tmp_name,$videoDirectroy,$videoBannerDirectroy);
+                    } catch (Exception $ex) {
+                        print_r($ex);
+                    }
+
+                }
+            }else{
+                ?><script>
+                      alert("Sorry! Only .jpg/.png/.jpeg Accepted!!");
+                      window.location.href = "../video.php";
+                </script><?php
+            }
+        }
+    }else{
+        ?><script>
+              alert("Sorry! Only .MP4 Accepted!!");
+              window.location.href = "../video.php";
+        </script><?php
+    }
+    
 }
 
 ?>

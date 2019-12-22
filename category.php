@@ -81,10 +81,12 @@ include 'sidebar.php';
                          <div class="card">
                             <div class="card-body">
                                 <h5>Add Content Type</h5><br>
-                                <form action="model/Post.php" method="post" >
+                                <form action="model/Post.php" method="post" enctype="multipart/form-data">
                                     <input required type="text" name="contentType" class="form-control" placeholder="Type-Eg. Song or Video..."
                                              autocomplete="off" style="border-bottom:1px solid lightgray;padding-left:1%;" >
-                                            <br>
+                                    <br>
+                                    Upload Content Type Banner:<br>
+                                    <input type="file" name="content_type_banner" required><br>
                                     <input type="submit" value="SUBMIT" name="content_type_submit" class="btn btn-outline-info" >
                                 </form>
                                  
@@ -95,10 +97,12 @@ include 'sidebar.php';
                          <div class="card">
                             <div class="card-body">
                                 <h5>Add Artist Name</h5><br>
-                                <form action="model/Post.php" method="post" >
+                                <form action="model/Post.php" method="post" enctype="multipart/form-data" >
                                     <input required type="text" name="artistName" class="form-control" placeholder="Name-Eg. Diljit Dosanjh..."
                                              autocomplete="off" style="border-bottom:1px solid lightgray;padding-left:1%;" >
-                                            <br>
+                                    <br>
+                                    Upload Artist Image:<br>
+                                    <input type="file" name="artist_banner" required><br>
                                     <input type="submit" value="SUBMIT" name="artist" class="btn btn-outline-info" >
                                     
                                 </form>
@@ -110,10 +114,12 @@ include 'sidebar.php';
                          <div class="card">
                             <div class="card-body">
                                 <h5>Add Content Language</h5><br>
-                                <form action="model/Post.php" method="post" >
+                                <form action="model/Post.php" method="post" enctype="multipart/form-data">
                                     <input required type="text" name="language" class="form-control" placeholder="Type-Eg. Song or Video..."
                                              autocomplete="off" style="border-bottom:1px solid lightgray;padding-left:1%;" >
-                                            <br>
+                                    <br>
+                                    Upload Language Banner:<br>
+                                    <input type="file" name="language_banner" required><br>
                                     <input type="submit" value="SUBMIT" name="language_form" class="btn btn-outline-info" >
                                 </form>
                                 
@@ -148,6 +154,7 @@ include 'sidebar.php';
                                                             <th>S. No.</th>
                                                             <th>Content Type Id</th>
                                                             <th>Content Type</th>
+                                                            <th>Banner</th>
                                                         </tr>
                                                     </thead>
 
@@ -157,13 +164,16 @@ include 'sidebar.php';
                                                         {      
                                                             $cid = $row['typeid'];
                                                             $type = $row['contenttype'];
-
+                                                            $contentImg = $row['image'];
                                                           ?>
                                                             <tr>
                                                                 <td><?=$count?></td>
                                                                 <td><?=$cid?></td>
                                                                 <td><?=$type?></td>
-
+                                                                <td><center>
+                                                                    <img src="img/contenttype/<?=$contentImg?>" 
+                                                                         style="width:120px;" >
+                                                                </center></td>
 
                                                             </tr>
                                                         <?php 
@@ -187,6 +197,7 @@ include 'sidebar.php';
                                                             <th>S. No.</th>
                                                             <th>Artist Id</th>
                                                             <th>Artist</th>
+                                                            <th>Banner</th>
                                                         </tr>
                                                     </thead>
 
@@ -196,13 +207,17 @@ include 'sidebar.php';
                                                         {      
                                                             $aid = $row1['artistid'];
                                                             $artist = $row1['artistname'];
+                                                            $artistImg = $row1['image'];
 
                                                           ?>
                                                             <tr>
                                                                 <td><?=$count1?></td>
                                                                 <td><?=$aid?></td>
                                                                 <td><?=$artist?></td>
-
+                                                                <td><center>
+                                                                    <img src="img/artist/<?=$artistImg?>" 
+                                                                         style="width:100px;" >
+                                                                </center></td>
 
                                                             </tr>
                                                         <?php 
@@ -227,6 +242,7 @@ include 'sidebar.php';
                                                             <th>S. No.</th>
                                                             <th>Language Id</th>
                                                             <th>Language</th>
+                                                            <th>Banner</th>
                                                         </tr>
                                                     </thead>
 
@@ -236,14 +252,18 @@ include 'sidebar.php';
                                                         {      
                                                             $lid = $row2['languageid'];
                                                             $lang = $row2['languages'];
+                                                            $languageImg = $row2['image'];
 
                                                           ?>
                                                             <tr>
                                                                 <td><?=$count2?></td>
                                                                 <td><?=$lid?></td>
                                                                 <td><?=$lang?></td>
-
-
+                                                                <td><center>
+                                                                    <img src="img/language/<?=$languageImg?>" 
+                                                                         style="width:140px;" >
+                                                                </center></td>
+                                                                
                                                             </tr>
                                                         <?php 
                                                             $count2++;

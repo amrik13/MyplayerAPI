@@ -8,6 +8,8 @@ class ReadData{
     private $CONTENTTYPE_TABLE='type';
     private $ARTIST_TABLE='artist';
     private $LANGUAGE_TABLE='language';
+    private $SONG_TABLE = 'song';
+    private $VIDEO_TABLE = 'video';
     
     function __construct($conn) {
         $this->conn = $conn;
@@ -82,6 +84,22 @@ class ReadData{
     //Read Language
     public function readLanguage(){
         $sql = "SELECT * FROM ".$this->LANGUAGE_TABLE;
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    //Read Song Detail
+    public function readSongDetail(){
+        $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
+                . " LEFT JOIN artist A ON S.artistid = A.artistid"
+                . " LEFT JOIN language L ON S.languageid = L.languageid";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    // Read Video Detail
+     public function readVideoDetail(){
+        $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
+                . " LEFT JOIN artist A ON V.artistid = A.artistid"
+                . " LEFT JOIN language L ON V.languageid = L.languageid";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
