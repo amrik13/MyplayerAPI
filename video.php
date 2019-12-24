@@ -13,6 +13,8 @@ $result1 = $readCategory->readArtist();
 $result2 = $readCategory->readLanguage();
 $result3 = $readCategory->readSongDetail();
 $result4 = $readCategory->readVideoDetail();
+$artist_select = $readCategory->readArtist();
+$lang_select = $readCategory->readLanguage();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -176,8 +178,43 @@ include 'sidebar.php';
                                 <div class="tab-pane fade" id="songlist" role="tabpanel">
                                     <div class="card" style="width:100%;">
                                         <div class="card-body"  style="width:100%;">
-                                          <h5>Video List</h5>
-                                            <div class="table-responsive">
+                                          <div class="row">
+                                                <div class="col-md-2">
+                                                    <h5>Video List</h5>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label>Select Artist</label>
+                                                    <select onclick="myFunction(this.value,'artist')" style="padding-left:2%;width:60%;border:1px solid #CFCFCF;" class="form-control">
+                                                        <option value="none">None</option>
+                                                         <?php 
+                                                        while($row_art = mysqli_fetch_assoc($artist_select)){
+                                                             $art2 = $row_art['artistname'];
+                                                            $artId2 = $row_art['artistid'];
+                                                        ?>
+                                                        <option value="<?=$artId2?>"><?=$art2?></option>
+                                                        <?php
+                                                            } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5">
+                                                     <label>Select Language</label>
+                                                     <select onclick="myFunction(this.value,'language')" style="padding-left:2%;width:60%;border:1px solid #CFCFCF;" class="form-control">
+                                                    <option value="none">None</option>
+                                                    <?php 
+                                                        while($lang_row = mysqli_fetch_assoc($lang_select)){
+                                                            $language1 = $lang_row['languages'];
+                                                            $langId1 = $lang_row['languageid'];
+                                                    ?>
+                                                    <option value="<?=$langId1?>"><?=$language1?></option>
+
+                                                    <?php
+                                                        } ?>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div id="showhere"></div>
+                                            <div class="table-responsive" id="list">
                                                 <table id="data-table" class="table table-bordered" style="width:100%;" >
                                                     <thead class="thead-default">
                                                         <tr>
@@ -255,7 +292,28 @@ include 'sidebar.php';
             </section>
         </main>
 
+<script>
+function myFunction(id,type) {
+  var xhttp;
+  if (id == "none") {
+      document.getElementById("list").style.display = "block";
+      document.getElementById("showhere").style.display = "none";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("list").style.display = "none";
+        document.getElementById("showhere").style.display = "block";
+        document.getElementById("showhere").innerHTML = this.responseText;
+        
+    }
+  };
+  xhttp.open("GET", "getSong.php?table=video&type="+type+"&aid="+id, true);
+  xhttp.send();
+}
 
+</script>
         <!-- Javascript -->
         <!-- Vendors -->
         <script src="vendors/jquery/jquery.min.js"></script>

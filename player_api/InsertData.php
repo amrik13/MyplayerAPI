@@ -198,7 +198,10 @@ class InsertData{
             $sql = "INSERT INTO ".$this->ARTIST_TABLE." (artistname,image) VALUES ('$artist','$artistImage_name')";
             mysqli_query($this->conn, $sql);
             if(mysqli_affected_rows($this->conn)>0){
-               
+                ?><script>
+                    alert("Artist Inserted Successfully!!");
+                    window.location.href = "../category.php";
+                </script><?php
             }else{
                  ?><script>
                     alert("Error While Inserting Artist!!");

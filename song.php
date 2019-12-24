@@ -9,7 +9,9 @@ $conn = $db->connect_db();
 $readCategory = new ReadData($conn);
 $result = $readCategory->readContetType();
 $result1 = $readCategory->readArtist();
+$artist_select = $readCategory->readArtist();
 $result2 = $readCategory->readLanguage();
+$lang_select = $readCategory->readLanguage();
 $result3 = $readCategory->readSongDetail();
 ?>
 <!DOCTYPE html>
@@ -103,10 +105,10 @@ include 'sidebar.php';
                                                     
                                                     <?php 
                                                         while($row1 = mysqli_fetch_assoc($result1)){
-                                                            $type1 = $row1['artistname'];
-                                                            $typeId1 = $row1['artistid'];
+                                                            $art1 = $row1['artistname'];
+                                                            $artId1 = $row1['artistid'];
                                                     ?>
-                                                    <option value="<?=$typeId1?>"><?=$type1?></option>
+                                                    <option value="<?=$artId1?>"><?=$art1?></option>
 
                                                     <?php
                                                         } ?>
@@ -174,23 +176,61 @@ include 'sidebar.php';
                                 <div class="tab-pane fade" id="songlist" role="tabpanel">
                                     <div class="card" style="width:100%;">
                                         <div class="card-body"  style="width:100%;">
-                                          <h5>Song List</h5>
-                                            <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <h5>Song List</h5>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label>Select Artist</label>
+                                                    <select onclick="myFunction(this.value,'artist')" style="padding-left:2%;width:60%;border:1px solid #CFCFCF;" class="form-control">
+                                                        <option value="none">None</option>
+                                                         <?php 
+                                                        while($row_art = mysqli_fetch_assoc($artist_select)){
+                                                             $art2 = $row_art['artistname'];
+                                                            $artId2 = $row_art['artistid'];
+                                                        ?>
+                                                        <option value="<?=$artId2?>"><?=$art2?></option>
+                                                        <?php
+                                                            } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5">
+                                                     <label>Select Language</label>
+                                                     <select onclick="myFunction(this.value,'language')" style="padding-left:2%;width:60%;border:1px solid #CFCFCF;" class="form-control">
+                                                    <option value="none">None</option>
+                                                    <?php 
+                                                        while($lang_row = mysqli_fetch_assoc($lang_select)){
+                                                            $language1 = $lang_row['languages'];
+                                                            $langId1 = $lang_row['languageid'];
+                                                    ?>
+                                                    <option value="<?=$langId1?>"><?=$language1?></option>
+
+                                                    <?php
+                                                        } ?>
+                                                </select>
+                                                </div>
+                                            </div>
+<!--                                            <style>
+                                                #list{display: none;}
+                                            </style>-->
+                                            <br>
+                                            <div id="showhere"></div>
+                                            <div class="table-responsive" id="list">
                                                 <table id="data-table" class="table table-bordered" style="width:100%;" >
                                                     <thead class="thead-default">
                                                         <tr>
-                                                            <th>S. No.</th>
-                                                            <th>Song Id</th>
+                                                            <th style="width:5%">S. No.</th>
+                                                            <th style="width:5%">Song Id</th>
                                                             <th>Language</th>
                                                             <th>Artist Name</th>
                                                             <th>Song Title</th>
-                                                            <th>Song Description</th>
+                                                            <th style="width:100%">Song Description</th>
                                                             <th>Song URL</th>
                                                             <th>Song Upload Time</th>
                                                             <th>Song Banner</th>
                                                         </tr>
                                                     </thead>
-
+                                                
                                                   <?php 
                                                   $songcount = 1;
                                                         while($row3 = mysqli_fetch_assoc($result3)){
@@ -210,10 +250,10 @@ include 'sidebar.php';
                                                                 <td><?=$songLang?></td>
                                                                 <td><?=$artistname?></td>
                                                                 <td><?=$songtitle?></td>
-                                                                <td><?=$songdesc?></td>
+                                                                <td style="width:100%"><?=$songdesc?></td>
                                                                 <td><?=$songurl?>
                                                                     <br>
-                                                                <audio style="width:100%;" controls>
+                                                                <audio style="width:80%;" controls>
                                                                 <source src="<?=APIConstant::$SONGDIRECTORYURL.$songfilename?>">
                                                                 Your browser does not support the audio element.
                                                                 </audio>
@@ -222,7 +262,7 @@ include 'sidebar.php';
                                                                 <td>
                                                                 <center>
                                                                     <a href="<?=$songbanner?>" target="_blank">
-                                                                <img src="<?=$songbanner?>" style="width:150px;">
+                                                                <img src="<?=$songbanner?>" style="width:100px;">
                                                                 </a>
                                                                 </center>
                                                                 </td>
@@ -232,7 +272,7 @@ include 'sidebar.php';
                                                         $songcount++;
                                                     }
                                                     ?>
-
+                                                   
                                                 </table>
                                             </div>
 
@@ -251,9 +291,29 @@ include 'sidebar.php';
                 </footer>
             </section>
         </main>
+<script>
+function myFunction(id,type) {
+  var xhttp;
+  if (id == "none") {
+      document.getElementById("list").style.display = "block";
+      document.getElementById("showhere").style.display = "none";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("list").style.display = "none";
+        document.getElementById("showhere").style.display = "block";
+        document.getElementById("showhere").innerHTML = this.responseText;
+        
+    }
+  };
+  xhttp.open("GET", "getSong.php?table=song&type="+type+"&aid="+id, true);
+  xhttp.send();
+}
 
+</script>
 
-        <!-- Javascript -->
         <!-- Vendors -->
         <script src="vendors/jquery/jquery.min.js"></script>
         <script src="vendors/popper.js/popper.min.js"></script>
