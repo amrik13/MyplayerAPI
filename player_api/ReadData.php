@@ -63,6 +63,14 @@ class ReadData{
             </script><?php
         }
     }
+    
+     // Reading UserDetail
+    public function readUserDetail(){
+        $sql = "SELECT * FROM ".$this->USER_TABLE;
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
     // Reading TopImages
     public function readTopImage(){
         $sql = "SELECT * FROM ".$this->TOPIMAGE_TABLE;

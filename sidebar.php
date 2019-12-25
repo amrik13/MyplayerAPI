@@ -34,6 +34,11 @@
                     <i class="zmdi zmdi-swap-alt"></i>Video</a>
             </li>
             
+            <li>
+                <a href="api.php" style="font-size:15px;">
+                    <i class="zmdi zmdi-swap-alt"></i>APIs</a>
+            </li>
+            
              <li class="sh" >
                 <a href="song.php" style="font-size:15px;">
                     <img src="img/logout.png" style="width:30px;background-color:lightgray;" >Logout</a>
