@@ -251,7 +251,7 @@ class InsertData{
         
         if(move_uploaded_file($song_tmp_name, $songDirectroy.$songName)){
             if(move_uploaded_file($songBanner_tmp_name, $songBannerDirectroy.$songBannerName)){
-                
+                $songName = preg_replace('/\s+/', '_', $songName);
                 $songUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$SONGDIRECTORYURL.$songName;
                 $sql = "INSERT INTO ".$this->SONG_TABLE." (typeid,artistid,languageid,songtitle,songurl,songfilename,songbanner,songdescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$songTitle','$songUrl','$songName','$songBannerName','$songDesc')";
@@ -291,7 +291,7 @@ class InsertData{
         
         if(move_uploaded_file($video_tmp_name, $videoDirectroy.$videoName)){
             if(move_uploaded_file($videoBanner_tmp_name, $videoBannerDirectroy.$videoBannerName)){
-                
+                $videoName = preg_replace('/\s+/', '_', $videoName);
                 $videoUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$VIDEODIRECTORYURL.$videoName;
                 $sql = "INSERT INTO ".$this->VIDEO_TABLE." (typeid,artistid,languageid,videotitle,videourl,videofilename,videobanner,videodescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$videoTitle','$videoUrl','$videoName','$videoBannerName','$videoDesc')";
