@@ -248,10 +248,10 @@ class InsertData{
     public function insertSongDetail($artistId,$languageId,$typeId,$songTitle,
                 $songDesc,$songName,$songBannerName,$song_tmp_name,
             $songBanner_tmp_name,$songDirectroy,$songBannerDirectroy){
-        
+        $songName = preg_replace('/\s+/', '_', $songName);
         if(move_uploaded_file($song_tmp_name, $songDirectroy.$songName)){
             if(move_uploaded_file($songBanner_tmp_name, $songBannerDirectroy.$songBannerName)){
-                $songName = preg_replace('/\s+/', '_', $songName);
+                
                 $songUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$SONGDIRECTORYURL.$songName;
                 $sql = "INSERT INTO ".$this->SONG_TABLE." (typeid,artistid,languageid,songtitle,songurl,songfilename,songbanner,songdescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$songTitle','$songUrl','$songName','$songBannerName','$songDesc')";
@@ -288,16 +288,19 @@ class InsertData{
     public function insertVideoDetail($artistId,$languageId,$typeId,$videoTitle,
                 $videoDesc,$videoName,$videoBannerName,$video_tmp_name,
             $videoBanner_tmp_name,$videoDirectroy,$videoBannerDirectroy){
-        
+        $videoName = preg_replace('/\s+/', '_', $videoName);
         if(move_uploaded_file($video_tmp_name, $videoDirectroy.$videoName)){
             if(move_uploaded_file($videoBanner_tmp_name, $videoBannerDirectroy.$videoBannerName)){
-                $videoName = preg_replace('/\s+/', '_', $videoName);
+                
                 $videoUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$VIDEODIRECTORYURL.$videoName;
                 $sql = "INSERT INTO ".$this->VIDEO_TABLE." (typeid,artistid,languageid,videotitle,videourl,videofilename,videobanner,videodescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$videoTitle','$videoUrl','$videoName','$videoBannerName','$videoDesc')";
                 mysqli_query($this->conn, $sql);
                 if(mysqli_affected_rows($this->conn)>0){
-                   
+                   ?><script>
+                        alert("Video Detail Inserted Successfully!!");
+                        window.location.href = "../song.php";
+                    </script><?php
                 }else{
                      ?><script>
                         alert("Error While Inserting Video Detail Into DB!!");

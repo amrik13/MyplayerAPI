@@ -9,6 +9,10 @@ $readCategory = new ReadData($conn);
 $result = $readCategory->readContetType();
 $result1 = $readCategory->readArtist();
 $result2 = $readCategory->readLanguage();
+$result3 = $readCategory->readLanguage();
+$result4 = $readCategory->readLanguage();
+$result5 = $readCategory->readArtist();
+$result6 = $readCategory->readArtist();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +79,7 @@ include 'sidebar.php';
              <section class="content">
                  <div class="card">
                     <div class="card-body">
-                        <h5 style="text-align:center;">API Request Call Without Filter</h5><br><br>
+                        <h5 style="text-align:center;">DEMO API Request Call</h5><br><br>
                         <div class="row" role="tablist">
                             <div class="col-md-2">
                             <!--<form action="model/Post.php" method="post" enctype="multipart/form-data">
@@ -125,7 +129,7 @@ include 'sidebar.php';
                         </div>
                         <div class="col-md-2">
                             <center>
-<!--// Request LANGUAGE API Call Without Filter-->                            
+<!--// Request User Details API Call Without Filter-->                            
                             <form action="player_api/call_api_request.php" target="_blank" method="get">
                                 <input type="submit" value="USER DETAIL" name="user_detail_data" class="btn btn-outline-info" >
                             </form>    
@@ -142,7 +146,7 @@ include 'sidebar.php';
                                 <input type="submit" value="SEND API REQUEST" name="content_type_submit" class="btn btn-outline-info" >
                             </form>-->
                         <center>
-<!--// Request Carousel API Call Without Filter-->                            
+<!--// Request All Song API Call Without Filter-->                            
                         <form action="player_api/call_api_request.php" target="_blank" method="get">
                             <input type="submit" value="ALL SONG" name="all_song_data" style="width:80%;" class="btn btn-outline-info" >
                         </form>
@@ -150,9 +154,133 @@ include 'sidebar.php';
                     </div>
                     <div class="col-md-6">
                         <center>
-<!--// Request TOP Image API Call Without Filter-->                            
+<!--// Request ALl Video API Call Without Filter-->                            
                         <form action="player_api/call_api_request.php" target="_blank" method="get">
                             <input type="submit" value="ALL VIDEO" name="all_video_data" style="width:80%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request Latest Song API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <input type="submit" value="LATEST SONG" name="latest_song" style="width:80%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request Latest VIDEO API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <input type="submit" value="LATEST VIDEO" name="latest_video" style="width:80%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request DICSCOVER SONG(Language Specific Content) API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <select name="discover_song"  required>
+                                <option value="" >None</option>
+                                <?php
+                                while ($row_discover = mysqli_fetch_assoc($result3)){
+                                    $language = $row_discover['languages'];
+                                    $languageid = $row_discover['languageid'];
+                                ?>
+                                <option value="<?=$languageid?>"><?=$language?></option>
+                                <?php } ?>
+                            </select>
+                            
+                            <input type="submit" value="DICSCOVER SONG" name="discover_song_content" style="width:60%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request DICSCOVER VIDEO(Language Specific Content) API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <select name="discover_video"  required>
+                                <option value="" >None</option>
+                                <?php
+                                while ($row_discover1 = mysqli_fetch_assoc($result4)){
+                                    $language1 = $row_discover1['languages'];
+                                    $languageid1 = $row_discover1['languageid'];
+                                ?>
+                                <option value="<?=$languageid1?>"><?=$language1?></option>
+                                <?php } ?>
+                            </select>
+                            
+                            <input type="submit" value="DICSCOVER VIDEO" name="discover_video_content" style="width:60%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request ARTIST SONG(Language Specific Content) API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <select name="artist_song"  required>
+                                <option value="" >None</option>
+                                <?php
+                                while ($row_artist = mysqli_fetch_assoc($result5)){
+                                    $artist = $row_artist['artistname'];
+                                    $artistid = $row_artist['artistid'];
+                                ?>
+                                <option value="<?=$artistid?>"><?=$artist?></option>
+                                <?php } ?>
+                            </select>
+                            
+                            <input type="submit" value="ARTIST-SONG" name="artist_song_content" style="width:60%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request ARTIST VIDEO(Language Specific Content) API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <select name="artist_video"  required>
+                                <option value="" >None</option>
+                                 <?php
+                                while ($row_artist1 = mysqli_fetch_assoc($result6)){
+                                    $artist1 = $row_artist1['artistname'];
+                                    $artistid1 = $row_artist1['artistid'];
+                                ?>
+                                <option value="<?=$artistid1?>"><?=$artist1?></option>
+                                <?php } ?>
+                            </select>
+                            
+                            <input type="submit" value="ARTIST-VIDEO" name="artist_video_content" style="width:60%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request Most Played Song API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <input type="submit" value="MOST-PLAYED-SONG" name="most_played_song" style="width:80%;" class="btn btn-outline-info" >
+                        </form>
+                        </center>
+                    </div>
+                        
+                    <div class="col-md-6">
+                        <br>
+                        <center>
+<!--// Request Most Played VIDEO API Call Without Filter-->                            
+                        <form action="player_api/call_api_request.php" target="_blank" method="get">
+                            <input type="submit" value="MOST-PLAYED-VIDEO" name="most_played_video" style="width:80%;" class="btn btn-outline-info" >
                         </form>
                         </center>
                     </div>

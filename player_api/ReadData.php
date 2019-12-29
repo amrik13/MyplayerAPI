@@ -112,6 +112,75 @@ class ReadData{
         return $rs;
     }
     
+    //Read Latest Song Detail
+    public function readLatestSongDetail(){
+        $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
+                . " LEFT JOIN artist A ON S.artistid = A.artistid"
+                . " LEFT JOIN language L ON S.languageid = L.languageid ORDER BY time DESC LIMIT 10";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
+    //Read Latest Video Detail
+    public function readLatestVideoDetail(){
+        $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
+                . " LEFT JOIN artist A ON V.artistid = A.artistid"
+                . " LEFT JOIN language L ON V.languageid = L.languageid ORDER BY time DESC LIMIT 10";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
+    //Read Discover Song Detail
+    public function readDiscoverSongDetail($languageId){
+        $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
+                . " LEFT JOIN artist A ON S.artistid = A.artistid"
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.languageid = '$languageId'";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
+     // Read Discover Video Detail
+     public function readDiscoverVideoDetail($languageId){
+        $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
+                . " LEFT JOIN artist A ON V.artistid = A.artistid"
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.languageid = '$languageId'";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
+     //Read Artist Song Detail
+    public function readArtistSongDetail($artistId){
+        $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
+                . " LEFT JOIN artist A ON S.artistid = A.artistid"
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.artistid = '$artistId'";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    // Read Artist Video Detail
+     public function readArtistVideoDetail($artistId){
+        $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
+                . " LEFT JOIN artist A ON V.artistid = A.artistid"
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.artistid = '$artistId'";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    //Read Most Played Song Detail
+    public function readMostPlayedSongDetail(){
+        $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
+                . " LEFT JOIN artist A ON S.artistid = A.artistid"
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.counter != 0 ORDER BY S.counter DESC LIMIT 10";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
+    
+    //Read Most Played Video Detail
+    public function readMostPlayedVideoDetail(){
+        $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
+                . " LEFT JOIN artist A ON V.artistid = A.artistid"
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.counter != 0 ORDER BY V.counter DESC LIMIT 10";
+        $rs = mysqli_query($this->conn, $sql);
+        return $rs;
+    }
 }
 
 
