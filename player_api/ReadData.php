@@ -99,7 +99,7 @@ class ReadData{
     public function readSongDetail(){
         $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
                 . " LEFT JOIN artist A ON S.artistid = A.artistid"
-                . " LEFT JOIN language L ON S.languageid = L.languageid";
+                . " LEFT JOIN language L ON S.languageid = L.languageid ORDER BY S.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -107,7 +107,7 @@ class ReadData{
      public function readVideoDetail(){
         $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
                 . " LEFT JOIN artist A ON V.artistid = A.artistid"
-                . " LEFT JOIN language L ON V.languageid = L.languageid";
+                . " LEFT JOIN language L ON V.languageid = L.languageid ORDER BY V.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -116,7 +116,7 @@ class ReadData{
     public function readLatestSongDetail(){
         $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
                 . " LEFT JOIN artist A ON S.artistid = A.artistid"
-                . " LEFT JOIN language L ON S.languageid = L.languageid ORDER BY time DESC LIMIT 10";
+                . " LEFT JOIN language L ON S.languageid = L.languageid ORDER BY time DESC LIMIT 12";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -125,7 +125,7 @@ class ReadData{
     public function readLatestVideoDetail(){
         $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
                 . " LEFT JOIN artist A ON V.artistid = A.artistid"
-                . " LEFT JOIN language L ON V.languageid = L.languageid ORDER BY time DESC LIMIT 10";
+                . " LEFT JOIN language L ON V.languageid = L.languageid ORDER BY time DESC LIMIT 12";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -134,7 +134,7 @@ class ReadData{
     public function readDiscoverSongDetail($languageId){
         $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
                 . " LEFT JOIN artist A ON S.artistid = A.artistid"
-                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.languageid = '$languageId'";
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.languageid = '$languageId' ORDER BY S.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -143,7 +143,7 @@ class ReadData{
      public function readDiscoverVideoDetail($languageId){
         $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
                 . " LEFT JOIN artist A ON V.artistid = A.artistid"
-                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.languageid = '$languageId'";
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.languageid = '$languageId' ORDER BY V.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -152,7 +152,7 @@ class ReadData{
     public function readArtistSongDetail($artistId){
         $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
                 . " LEFT JOIN artist A ON S.artistid = A.artistid"
-                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.artistid = '$artistId'";
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.artistid = '$artistId' ORDER BY S.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -160,7 +160,7 @@ class ReadData{
      public function readArtistVideoDetail($artistId){
         $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
                 . " LEFT JOIN artist A ON V.artistid = A.artistid"
-                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.artistid = '$artistId'";
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.artistid = '$artistId' ORDER BY V.time DESC";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -168,7 +168,7 @@ class ReadData{
     public function readMostPlayedSongDetail(){
         $sql = "SELECT * FROM ".$this->SONG_TABLE ." S"
                 . " LEFT JOIN artist A ON S.artistid = A.artistid"
-                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.counter != 0 ORDER BY S.counter DESC LIMIT 10";
+                . " LEFT JOIN language L ON S.languageid = L.languageid WHERE S.counter != 0 ORDER BY S.counter DESC LIMIT 12";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }
@@ -177,7 +177,7 @@ class ReadData{
     public function readMostPlayedVideoDetail(){
         $sql = "SELECT * FROM ".$this->VIDEO_TABLE ." V"
                 . " LEFT JOIN artist A ON V.artistid = A.artistid"
-                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.counter != 0 ORDER BY V.counter DESC LIMIT 10";
+                . " LEFT JOIN language L ON V.languageid = L.languageid WHERE V.counter != 0 ORDER BY V.counter DESC LIMIT 12";
         $rs = mysqli_query($this->conn, $sql);
         return $rs;
     }

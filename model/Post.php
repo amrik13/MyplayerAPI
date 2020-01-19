@@ -234,7 +234,7 @@ if(isset($_REQUEST['artist'])){
                       window.location.href = "../category.php";
                 </script><?php
                 }else{
-                     $artist = trim(strtolower($artist));
+                     //$artist = trim(strtolower($artist));
                     $insertArtist = new InsertData($conn);
                     $insertArtist->insertArtist($artist,$artistImage_name,
                             $img_tmp_name,$artistImage_dir);
@@ -306,18 +306,21 @@ if(isset($_REQUEST['upload_song_data'])){
     $songTitle = $_REQUEST['song_title'];
     $songDesc = $_REQUEST['song_description'];
     // Song .mp3 file
-    $songName = $_FILES['song_file']['name'];
-    $songFileType = $_FILES['song_file']['type'];
+    $songName1 = $_FILES['song_file']['name'];
+    $songName = preg_replace('/\s+/', '_', $songName1);
+    $songFileType = pathinfo($songName, PATHINFO_EXTENSION);
     $song_tmp_name = $_FILES['song_file']['tmp_name'];
     $songDirectroy = APIConstant::$SONGDIRECTORY;
+    
     // Song Image file
-    $songBannerName = $_FILES['song_banner']['name'];
+    $songBannerName1 = $_FILES['song_banner']['name'];
+    $songBannerName = preg_replace('/\s+/', '_', $songBannerName1);
     $songBannerFileType = $_FILES['song_banner']['type'];
     $songBanner_tmp_name = $_FILES['song_banner']['tmp_name'];
     $songBannerDirectroy = APIConstant::$SONGIMAGEDIR;
-    //echo $songFileType;
+    //echo $songName."<br>".$songFileType;
     
-    if($songFileType=="audio/mp3"){
+    if($songFileType=="mp3"){
             if(file_exists($songDirectroy.$songName)){
             ?><script>
                   alert("Hello! Song File Already Exist With This Name!");
@@ -348,9 +351,9 @@ if(isset($_REQUEST['upload_song_data'])){
                 }
             }
         }else{
-            ?><script>
-                  alert("Sorry! Only .MP3 Accepted!!");
-                  window.location.href = "../song.php";
+             ?><script>
+                alert("Sorry! Only .MP3 Accepted!!");
+                window.location.href = "../song.php";
             </script><?php
         }
     
@@ -366,18 +369,20 @@ if(isset($_REQUEST['upload_video_data'])){
     $videoTitle = $_REQUEST['video_title'];
     $videoDesc = $_REQUEST['video_description'];
     // Song .mp3 file
-    $videoName = $_FILES['video_file']['name'];
-    $videoFileType = $_FILES['video_file']['type'];
+    $videoName1 = $_FILES['video_file']['name'];
+    $videoName = preg_replace('/\s+/', '_', $videoName1);
+    $videoFileType = pathinfo($videoName, PATHINFO_EXTENSION);
     $video_tmp_name = $_FILES['video_file']['tmp_name'];
     $videoDirectroy = APIConstant::$VIDEODIRECTORY;
     // Song Image file
-    $videoBannerName = $_FILES['video_banner']['name'];
+    $videoBannerName1 = $_FILES['video_banner']['name'];
+    $videoBannerName = preg_replace('/\s+/', '_', $videoBannerName1);
     $videoBannerFileType = $_FILES['video_banner']['type'];
     $videoBanner_tmp_name = $_FILES['video_banner']['tmp_name'];
     $videoBannerDirectroy = APIConstant::$VIDEOIMAGEDIR;
     //echo $songFileType;
     
-    if($videoFileType=="video/mp4"){
+    if($videoFileType=="mp4"){
         if(file_exists($videoDirectroy.$videoName)){
         ?><script>
               alert("Hello! Video File Already Exist With This Name!");
@@ -415,5 +420,19 @@ if(isset($_REQUEST['upload_video_data'])){
     }
     
 }
-
+// Most played Section
+if(isset($_REQUEST['most_played_song'])){
+    $songId = $_REQUEST['contentid'];
+    $insertData = new InsertData($conn);
+    if(!empty($songId)){
+        $insertData->updateSongPlayedCounter($songId);
+    }
+}
+if(isset($_REQUEST['most_played_video'])){
+    $videoId = $_REQUEST['contentid'];
+    $insertData = new InsertData($conn);
+    if(!empty($videoId)){
+        $insertData->updateVideoPlayedCounter($videoId);
+    }
+}
 ?>

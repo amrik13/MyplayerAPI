@@ -13,7 +13,7 @@ $base_url = $_SERVER['HTTP_HOST']."/MyplayerAPI/";
 // All Carousel Data Response
 if(isset($_REQUEST['all_carousel_data']))
 {
-    $banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$CAROUSELBANNERURL;
+    $banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$CAROUSELBANNERURL;
     $result_carousel = $readData->readCarousel();
     if(mysqli_num_rows($result_carousel)>0){
         $carousel_api = array();
@@ -37,7 +37,7 @@ if(isset($_REQUEST['all_carousel_data']))
 // Top_Image_Data API Data Response
 if(isset($_REQUEST['top_image_data']))
 {
-    $top_img_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$TOPIMAGEDIRURL;
+    $top_img_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$TOPIMAGEDIRURL;
     $result_top_img = $readData->readTopImage();
     if(mysqli_num_rows($result_top_img)>0){
         $top_img_api = array();
@@ -59,7 +59,7 @@ if(isset($_REQUEST['top_image_data']))
 // ARTIST API Data Response
 if(isset($_REQUEST['artist_data']))
 {
-    $artist_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$ARTISTDIRURL;
+    $artist_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$ARTISTDIRURL;
     $result_artist = $readData->readArtist();
     if(mysqli_num_rows($result_artist)>0){
         $artist_api = array();
@@ -82,7 +82,7 @@ if(isset($_REQUEST['artist_data']))
 // CONTENT TYPE API Data Response
 if(isset($_REQUEST['content_type_data']))
 {
-    $content_type_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$CONTENTTYPEDIRURL;
+    $content_type_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$CONTENTTYPEDIRURL;
     $result_content_type = $readData->readContetType();
     if(mysqli_num_rows($result_content_type)>0){
         $content_type_api = array();
@@ -105,7 +105,7 @@ if(isset($_REQUEST['content_type_data']))
 // LANGUAGE API Data Response
 if(isset($_REQUEST['language_data']))
 {
-    $language_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$LANGUAGEDIRURL;
+    $language_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$LANGUAGEDIRURL;
     $result_language = $readData->readLanguage();
     if(mysqli_num_rows($result_language)>0){
         $language_api = array();
@@ -151,7 +151,7 @@ if(isset($_REQUEST['user_detail_data']))
 // SONG API Data Response
 if(isset($_REQUEST['all_song_data']))
 {
-    $song_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
+    $song_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
     $result_song = $readData->readSongDetail();
     if(mysqli_num_rows($result_song)>0){
         $song_api = array();
@@ -162,6 +162,7 @@ if(isset($_REQUEST['all_song_data']))
                 'songid' => $songid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'songtitle' => $songtitle,
@@ -181,7 +182,7 @@ if(isset($_REQUEST['all_song_data']))
 // VIDEO API Data Response
 if(isset($_REQUEST['all_video_data']))
 {
-    $video_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
+    $video_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
     
     $result_video = $readData->readVideoDetail();
     if(mysqli_num_rows($result_video)>0){
@@ -193,6 +194,7 @@ if(isset($_REQUEST['all_video_data']))
                 'videoid' => $videoid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'videotitle' => $videotitle,
@@ -213,7 +215,7 @@ if(isset($_REQUEST['all_video_data']))
 // LATEST SONG API Data Response
 if(isset($_REQUEST['latest_song']))
 {
-    $song_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
+    $song_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
     $result_song = $readData->readLatestSongDetail();
     if(mysqli_num_rows($result_song)>0){
         $song_api = array();
@@ -224,6 +226,7 @@ if(isset($_REQUEST['latest_song']))
                 'songid' => $songid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'songtitle' => $songtitle,
@@ -245,7 +248,7 @@ if(isset($_REQUEST['latest_song']))
 // LATEST VIDEO API Data Response
 if(isset($_REQUEST['latest_video']))
 {
-    $video_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
+    $video_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
     $result_video = $readData->readLatestVideoDetail();
     if(mysqli_num_rows($result_video)>0){
         $video_api = array();
@@ -256,6 +259,7 @@ if(isset($_REQUEST['latest_video']))
                 'videoid' => $videoid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'videotitle' => $videotitle,
@@ -278,7 +282,7 @@ if(isset($_REQUEST['latest_video']))
 if(isset($_REQUEST['discover_song_content']))
 {
     $languageId = $_REQUEST['discover_song'];
-    $song_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
+    $song_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
     $result_song = $readData->readDiscoverSongDetail($languageId);
     if(mysqli_num_rows($result_song)>0){
         $song_api = array();
@@ -289,6 +293,7 @@ if(isset($_REQUEST['discover_song_content']))
                 'songid' => $songid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'songtitle' => $songtitle,
@@ -310,7 +315,7 @@ if(isset($_REQUEST['discover_song_content']))
 if(isset($_REQUEST['discover_video_content']))
 {
     $languageId = $_REQUEST['discover_video'];
-    $video_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
+    $video_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
     $result_video = $readData->readDiscoverVideoDetail($languageId);
     if(mysqli_num_rows($result_video)>0){
         $video_api = array();
@@ -321,6 +326,7 @@ if(isset($_REQUEST['discover_video_content']))
                 'videoid' => $videoid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'videotitle' => $videotitle,
@@ -342,7 +348,7 @@ if(isset($_REQUEST['discover_video_content']))
 if(isset($_REQUEST['artist_song_content']))
 {
     $artistId = $_REQUEST['artist_song'];
-    $song_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
+    $song_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
     $result_song = $readData->readArtistSongDetail($artistId);
     if(mysqli_num_rows($result_song)>0){
         $song_api = array();
@@ -353,6 +359,7 @@ if(isset($_REQUEST['artist_song_content']))
                 'songid' => $songid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'songtitle' => $songtitle,
@@ -374,7 +381,7 @@ if(isset($_REQUEST['artist_song_content']))
 if(isset($_REQUEST['artist_video_content']))
 {
     $artistId = $_REQUEST['artist_video'];
-    $video_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
+    $video_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
     $result_video = $readData->readArtistVideoDetail($artistId);
     if(mysqli_num_rows($result_video)>0){
         $video_api = array();
@@ -385,6 +392,7 @@ if(isset($_REQUEST['artist_video_content']))
                 'videoid' => $videoid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'videotitle' => $videotitle,
@@ -404,7 +412,7 @@ if(isset($_REQUEST['artist_video_content']))
 // MOST PLAYED SONG API Data Response
 if(isset($_REQUEST['most_played_song']))
 {
-    $song_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
+    $song_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$SONGIMAGEDIRURL;
     $result_song = $readData->readMostPlayedSongDetail();
     if(mysqli_num_rows($result_song)>0){
         $song_api = array();
@@ -415,6 +423,7 @@ if(isset($_REQUEST['most_played_song']))
                 'songid' => $songid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'songtitle' => $songtitle,
@@ -436,7 +445,7 @@ if(isset($_REQUEST['most_played_song']))
 // MOST PLAYED VIDEO API Data Response
 if(isset($_REQUEST['most_played_video']))
 {
-    $video_banner_base_url = APIConstant::$SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
+    $video_banner_base_url = APIConstant::$HTTPS_SCHEME.$base_url.APIConstant::$VIDEOIMAGEDIRURL;
     $result_video = $readData->readMostPlayedVideoDetail();
     if(mysqli_num_rows($result_video)>0){
         $video_api = array();
@@ -447,6 +456,7 @@ if(isset($_REQUEST['most_played_video']))
                 'videoid' => $videoid,
                 'typeid' => $typeid,
                 'artistid' => $artistid,
+                'artistname' => $artistname,
                 'languageid' => $languageid,
                 'counter' => $counter,
                 'videotitle' => $videotitle,

@@ -248,11 +248,11 @@ class InsertData{
     public function insertSongDetail($artistId,$languageId,$typeId,$songTitle,
                 $songDesc,$songName,$songBannerName,$song_tmp_name,
             $songBanner_tmp_name,$songDirectroy,$songBannerDirectroy){
-        $songName = preg_replace('/\s+/', '_', $songName);
+        
         if(move_uploaded_file($song_tmp_name, $songDirectroy.$songName)){
             if(move_uploaded_file($songBanner_tmp_name, $songBannerDirectroy.$songBannerName)){
                 
-                $songUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$SONGDIRECTORYURL.$songName;
+                $songUrl = APIConstant::$HTTPS_SCHEME. APIConstant::$BASEURL.APIConstant::$SONGDIRECTORYURL.$songName;
                 $sql = "INSERT INTO ".$this->SONG_TABLE." (typeid,artistid,languageid,songtitle,songurl,songfilename,songbanner,songdescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$songTitle','$songUrl','$songName','$songBannerName','$songDesc')";
                 mysqli_query($this->conn, $sql);
@@ -288,18 +288,18 @@ class InsertData{
     public function insertVideoDetail($artistId,$languageId,$typeId,$videoTitle,
                 $videoDesc,$videoName,$videoBannerName,$video_tmp_name,
             $videoBanner_tmp_name,$videoDirectroy,$videoBannerDirectroy){
-        $videoName = preg_replace('/\s+/', '_', $videoName);
+        
         if(move_uploaded_file($video_tmp_name, $videoDirectroy.$videoName)){
             if(move_uploaded_file($videoBanner_tmp_name, $videoBannerDirectroy.$videoBannerName)){
                 
-                $videoUrl = APIConstant::$SCHEME. APIConstant::$BASEURL.APIConstant::$VIDEODIRECTORYURL.$videoName;
+                $videoUrl = APIConstant::$HTTPS_SCHEME. APIConstant::$BASEURL.APIConstant::$VIDEODIRECTORYURL.$videoName;
                 $sql = "INSERT INTO ".$this->VIDEO_TABLE." (typeid,artistid,languageid,videotitle,videourl,videofilename,videobanner,videodescription) "
                         . "VALUES ('$typeId','$artistId','$languageId','$videoTitle','$videoUrl','$videoName','$videoBannerName','$videoDesc')";
                 mysqli_query($this->conn, $sql);
                 if(mysqli_affected_rows($this->conn)>0){
                    ?><script>
                         alert("Video Detail Inserted Successfully!!");
-                        window.location.href = "../song.php";
+                        window.location.href = "../video.php";
                     </script><?php
                 }else{
                      ?><script>
@@ -322,6 +322,34 @@ class InsertData{
         }
         
     }
+// Update Song Played Timer Counter
+    public function updateSongPlayedCounter($songId){
+        $sql1 = "SELECT counter FROM ".$this->SONG_TABLE." WHERE songid = '$songId'";
+        $rs1 = mysqli_query($this->conn, $sql1);
+        $row1 = mysqli_fetch_assoc($rs1);
+        $counter = $row1['counter']+1;
+        $sql = "UPDATE ".$this->SONG_TABLE." SET counter = '$counter' WHERE songid = '$songId'";
+        mysqli_query($this->conn, $sql);
+        if(mysqli_affected_rows($this->conn)>0){
+            echo "Updated";
+        }else{
+            echo "Unable To Update";
+        }
+    }
+// Update Video Played Timer Counter
+    public function updateVideoPlayedCounter($videoId){
+        $sql1 = "SELECT counter FROM ".$this->VIDEO_TABLE." WHERE videoid = '$videoId'";
+        $rs1 = mysqli_query($this->conn, $sql1);
+        $row1 = mysqli_fetch_assoc($rs1);
+        $counter = $row1['counter']+1;
+        $sql = "UPDATE ".$this->VIDEO_TABLE." SET counter = '$counter' WHERE videoid = '$videoId'";
+        mysqli_query($this->conn, $sql);
+        if(mysqli_affected_rows($this->conn)>0){
+            echo "Updated";
+        }else{
+            echo "Unable To Update";
+        }
+    } 
     
     
 }

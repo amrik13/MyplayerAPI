@@ -35,6 +35,16 @@
             </li>
             
             <li>
+                <a href="mostPlayed.php?most_played=song" style="font-size:15px;">
+                    <i class="zmdi zmdi-swap-alt"></i>Most Played Song</a>
+            </li>
+            
+            <li>
+                <a href="mostPlayed.php?most_played=video" style="font-size:15px;">
+                    <i class="zmdi zmdi-swap-alt"></i>Most Played Video</a>
+            </li>
+            
+            <li>
                 <a href="api.php" style="font-size:15px;">
                     <i class="zmdi zmdi-swap-alt"></i>APIs</a>
             </li>
